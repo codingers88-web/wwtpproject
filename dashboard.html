@@ -1,132 +1,958 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>WWTP Ceramic Web App V7.0</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef2f7;color:#172033}
-header{background:#17365d;color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10}
-h1{font-size:20px;margin:0 0 4px}.sub{font-size:12px;opacity:.85}
-nav{display:flex;gap:7px;overflow:auto;background:#fff;padding:8px;position:sticky;top:61px;z-index:9;border-bottom:1px solid #ccd5e0}
-nav button{border:0;padding:10px 13px;border-radius:8px;background:#e8edf4;white-space:nowrap;font-weight:700}
-nav button.active{background:#17365d;color:white}
-main{max-width:1100px;margin:auto;padding:12px}.page{display:none}.page.active{display:block}
-.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px #0001}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}input,select{width:100%;padding:10px;border:1px solid #c7d0dc;border-radius:8px;font-size:15px}
-.kpi{padding:12px;border-radius:10px;background:#f5f7fa}.kpi b{font-size:20px;display:block;margin-top:4px}.kpi small{color:#64748b}
-table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:8px;border-bottom:1px solid #e1e6ed;text-align:right}th:first-child,td:first-child{text-align:left}
-.flow{display:flex;gap:8px;overflow:auto;padding:6px 0}.node{min-width:125px;padding:12px;text-align:center;border-radius:10px;background:#eaf1fb;border:1px solid #b8c9df;font-weight:700}.arrow{align-self:center;font-size:22px}
-button.primary{background:#1677c8;color:#fff;border:0;padding:11px 16px;border-radius:8px;font-weight:700}
-button.danger{background:#b42318;color:#fff;border:0;padding:8px 12px;border-radius:7px}
-.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#e8f7ed;color:#176b35;font-weight:700;font-size:12px}
-.warn{background:#fff4d6;border-left:4px solid #d99b00;padding:10px;border-radius:6px}
-.hidden{display:none}.muted{color:#64748b;font-size:12px}
-@media(max-width:700px){.grid,.grid3{grid-template-columns:repeat(2,1fr)}h1{font-size:18px}nav{top:57px}.node{min-width:110px}.card{padding:11px}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>WWTP Ceramic Web App V7.0</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            color: #172033;
+        }
+
+        header {
+            background: #17365d;
+            color: #fff;
+            padding: 14px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0 0 4px;
+        }
+
+        .sub {
+            font-size: 12px;
+            opacity: .85;
+        }
+
+        nav {
+            display: flex;
+            gap: 7px;
+            overflow: auto;
+            background: #fff;
+            padding: 8px;
+            position: sticky;
+            top: 61px;
+            z-index: 9;
+            border-bottom: 1px solid #ccd5e0;
+        }
+
+        nav button {
+            border: 0;
+            padding: 10px 13px;
+            border-radius: 8px;
+            background: #e8edf4;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        nav button.active {
+            background: #17365d;
+            color: white;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 12px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px #0001;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .grid3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #c7d0dc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .kpi {
+            padding: 12px;
+            border-radius: 10px;
+            background: #f5f7fa;
+        }
+
+        .kpi b {
+            font-size: 20px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .kpi small {
+            color: #64748b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #e1e6ed;
+            text-align: right;
+        }
+
+        th:first-child,
+        td:first-child {
+            text-align: left;
+        }
+
+        .flow {
+            display: flex;
+            gap: 8px;
+            overflow: auto;
+            padding: 6px 0;
+        }
+
+        .node {
+            min-width: 125px;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            background: #eaf1fb;
+            border: 1px solid #b8c9df;
+            font-weight: 700;
+        }
+
+        .arrow {
+            align-self: center;
+            font-size: 22px;
+        }
+
+        button.primary {
+            background: #1677c8;
+            color: #fff;
+            border: 0;
+            padding: 11px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        button.danger {
+            background: #b42318;
+            color: #fff;
+            border: 0;
+            padding: 8px 12px;
+            border-radius: 7px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #e8f7ed;
+            color: #176b35;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .warn {
+            background: #fff4d6;
+            border-left: 4px solid #d99b00;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .muted {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .grid,
+            .grid3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            nav {
+                top: 57px;
+            }
+
+            .node {
+                min-width: 110px;
+            }
+
+            .card {
+                padding: 11px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<header><h1>WWTP CERAMIC — Web App V7.0</h1><div class="sub">Operator • Engineering • Database | Mobile Android Ready</div></header>
-<nav>
-<button class="active" onclick="show('operator',this)">Operator</button>
-<button onclick="show('engineering',this)">Engineering</button>
-<button onclick="show('database',this)">Database</button>
-</nav>
-<main>
-<section id="operator" class="page active">
-<div class="card">
-<h3>Input Operasi Harian</h3>
-<div class="grid">
-<div><label>Tanggal</label><input id="date" type="date"></div>
-<div><label>Shift / Jam operasi</label><input id="hours" type="number" step=".1" value="24"></div>
-<div><label>Frekuensi slurry pump (Hz)</label><input id="hz" type="number" step="1" min="20" max="50" value="50"></div>
-<div><label>Actual pump output (m³/h) *</label><input id="actual" type="number" step=".01" value="12"></div>
-</div>
-<p class="muted">Perhitungan volume harian memakai actual pump output × jam operasi. Database Hz hanya sebagai referensi engineering.</p>
-<button class="primary" onclick="calculate()">Hitung Proses</button>
-</div>
 
-<div class="card"><h3>Hasil Utama</h3><div class="grid3">
-<div class="kpi"><small>Slurry / hari</small><b id="kSlurry">0</b> m³</div>
-<div class="kpi"><small>Air / hari</small><b id="kWater">0</b> m³</div>
-<div class="kpi"><small>Sludge / hari</small><b id="kSludge">0</b> m³</div>
-<div class="kpi"><small>Filter Press runtime</small><b id="kFP">0</b> jam</div>
-<div class="kpi"><small>Reservoir pump</small><b id="kRes">9</b> m³/h</div>
-<div class="kpi"><small>Surplus ke overflow</small><b id="kEff">0</b> m³/h</div>
-</div></div>
+    <header>
+        <h1>WWTP CERAMIC — Web App V7.0</h1>
+        <div class="sub">
+            Operator • Engineering • Database | Mobile Android Ready
+        </div>
+    </header>
 
-<div class="card"><h3>Alur Proses</h3><div class="flow">
-<div class="node">Bak 1<br><small>Equalizing</small></div><div class="arrow">→</div>
-<div class="node">CAF<br><small>4.2 m³</small></div><div class="arrow">→</div>
-<div class="node">Bak 2<br><small>Sludge</small></div><div class="arrow">→</div>
-<div class="node">Filter Press<br><small>15 m³/h</small></div><div class="arrow">→</div>
-<div class="node">Bak 3<br><small>Sedimentasi</small></div><div class="arrow">→</div>
-<div class="node">Reservoir<br><small>Recycle / Effluent</small></div>
-</div></div>
+    <nav>
+        <button class="active" onclick="show('operator', this)">
+            Operator
+        </button>
 
-<div class="card"><h3>Kimia Hari Ini</h3><div id="chemKpi" class="grid3"></div></div>
-<div class="card"><h3>Catatan Operator</h3><textarea id="notes" style="width:100%;min-height:80px;border:1px solid #ccd5e0;border-radius:8px;padding:9px" placeholder="Masukkan kondisi proses..."></textarea></div>
-</section>
+        <button onclick="show('engineering', this)">
+            Engineering
+        </button>
 
-<section id="engineering" class="page">
-<div class="card"><h3>Engineering — Validasi Proses</h3>
-<div class="warn">Actual pump output adalah nilai utama. Split air/sludge menggunakan karakteristik frequency database sebagai referensi. Cake wet/dry dan filtrat belum dihitung sebagai mass balance otomatis sampai data sampling final dikunci.</div>
-</div>
-<div class="card"><h3>Frequency Database</h3><table id="freqTable"><thead><tr><th>Hz</th><th>Slurry m³/h</th><th>Water m³/h</th><th>Sludge m³/h</th></tr></thead><tbody></tbody></table></div>
-<div class="card"><h3>Parameter Tetap</h3><div class="grid3">
-<div class="kpi">CAF volume<b>4.2 m³</b></div><div class="kpi">Filter Press<b>15 m³/h</b></div><div class="kpi">Reservoir pump<b>9 m³/h @ 40 Hz</b></div>
-</div></div>
-</section>
+        <button onclick="show('database', this)">
+            Database
+        </button>
+    </nav>
 
-<section id="database" class="page">
-<div class="card"><h3>Database Engineering</h3>
-<p class="muted">Area ini untuk engineering. Data default dapat diubah dan disimpan di browser perangkat ini.</p>
-<table id="chemTable"><thead><tr><th>Chemical</th><th>mL</th><th>sec</th><th>kg/L</th><th>Rp/kg</th></tr></thead><tbody></tbody></table>
-<br><button class="primary" onclick="saveChem()">Simpan Database</button>
-<button class="danger" onclick="resetChem()">Reset Default</button>
-</div>
-<div class="card"><h3>Catatan Mass Balance</h3>
-<p>Liquid: m³. Solids: kg/ton. Filter Press 15 m³/h. Data cake/filtrat harus berasal dari sampling/measurement yang tervalidasi sebelum dimasukkan sebagai model.</p>
-</div>
-</section>
-</main>
-<script>
-const freq=[
-[50,12,11.76,.24],[49,11.76,11.52,.24],[48,11.52,11.29,.23],[47,11.28,11.05,.23],[46,11.04,10.82,.22],
-[45,10.8,10.58,.22],[44,10.56,10.35,.21],[43,10.32,10.11,.21],[42,10.08,9.88,.20],[41,9.84,9.64,.20],
-[40,9.6,9.41,.19],[39,9.36,9.17,.19],[38,9.12,8.94,.18],[37,8.88,8.70,.18],[36,8.64,8.47,.17],
-[35,8.4,8.23,.17],[34,8.16,8,.16],[33,7.92,7.76,.16],[32,7.68,7.53,.15],[31,7.44,7.29,.15],
-[30,7.2,7.06,.14],[29,6.96,6.82,.14],[28,6.72,6.59,.13],[27,6.48,6.35,.13],[26,6.24,6.12,.12],
-[25,6,5.88,.12],[24,5.76,5.64,.12],[23,5.52,5.41,.11],[22,5.28,5.17,.11],[21,5.04,4.94,.10],[20,4.8,4.7,.10]];
-const defaults=[
-["MASTER TP3450",400,60,.1,4425],
-["MASTER CLEAN",100,24,.1,5200],
-["FLOCCULANT",100,48,.001,78000],
-["CAUSTIC SODA",100,120,.1,11700]];
-let chem=JSON.parse(localStorage.getItem('wwtpChemV7')||'null')||defaults;
-function show(id,b){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
-function fmt(x,d=2){return Number(x||0).toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d})}
-function render(){
- let tb=document.querySelector('#freqTable tbody');tb.innerHTML=freq.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('');
- let ct=document.querySelector('#chemTable tbody');ct.innerHTML=chem.map((r,i)=>`<tr><td>${r[0]}</td><td><input data-i="${i}" data-c="1" value="${r[1]}"></td><td><input data-i="${i}" data-c="2" value="${r[2]}"></td><td><input data-i="${i}" data-c="3" value="${r[3]}"></td><td><input data-i="${i}" data-c="4" value="${r[4]}"></td></tr>`).join('');
-}
-function saveChem(){
- document.querySelectorAll('#chemTable input').forEach(x=>chem[x.dataset.i][x.dataset.c]=Number(x.value));
- localStorage.setItem('wwtpChemV7',JSON.stringify(chem));calculate();alert('Database kimia tersimpan di perangkat ini.');
-}
-function resetChem(){chem=defaults.map(x=>[...x]);localStorage.setItem('wwtpChemV7',JSON.stringify(chem));render();calculate();}
-function calculate(){
- let h=Number(hours.value)||0, hzv=Number(hz.value)||50, act=Number(actual.value)||0;
- let row=freq.find(r=>r[0]===hzv)||freq[0], ratioW=row[2]/row[1], ratioS=row[3]/row[1];
- let slurry=act*h, water=slurry*ratioW, sludge=slurry*ratioS, fp=sludge/15;
- let eff=Math.max(0,act-9);
- kSlurry.textContent=fmt(slurry);kWater.textContent=fmt(water);kSludge.textContent=fmt(sludge);kFP.textContent=fmt(fp);kEff.textContent=fmt(eff);
- let totalCost=0,totalKg=0,box='';
- chem.forEach(r=>{let pumpLh=(r[1]/1000/r[2])*3600, kgH=pumpLh*r[3], kgDay=kgH*h, cost=kgDay*r[4], kgm3=act?kgH/act:0;totalCost+=cost;totalKg+=kgDay;box+=`<div class="kpi"><small>${r[0]}</small><b>${fmt(kgDay,3)} kg/day</b><span class="muted">${fmt(kgm3,4)} kg/m³ • Rp ${Math.round(cost).toLocaleString('id-ID')}/day</span></div>`});
- box+=`<div class="kpi"><small>Total</small><b>${fmt(totalKg,3)} kg/day</b><span class="muted">Rp ${Math.round(totalCost).toLocaleString('id-ID')}/day</span></div>`;
- chemKpi.innerHTML=box;
-}
-date.value=new Date().toISOString().slice(0,10);render();calculate();
-</script>
-</body></html>
+    <main>
+
+        <!-- =========================================================
+             OPERATOR
+        ========================================================== -->
+
+        <section id="operator" class="page active">
+
+            <div class="card">
+                <h3>Input Operasi Harian</h3>
+
+                <div class="grid">
+
+                    <div>
+                        <label>Tanggal</label>
+                        <input id="date" type="date">
+                    </div>
+
+                    <div>
+                        <label>Shift / Jam operasi</label>
+                        <input id="hours" type="number" step=".1" value="24">
+                    </div>
+
+                    <div>
+                        <label>Frekuensi slurry pump (Hz)</label>
+                        <input id="hz" type="number" step="1" min="20" max="50" value="50">
+                    </div>
+
+                    <div>
+                        <label>Actual pump output (m³/h) *</label>
+                        <input id="actual" type="number" step=".01" value="12">
+                    </div>
+
+                </div>
+
+                <p class="muted">
+                    Perhitungan volume harian memakai actual pump output × jam operasi.
+                    Database Hz hanya sebagai referensi engineering.
+                </p>
+
+                <button class="primary" onclick="calculate()">
+                    Hitung Proses
+                </button>
+            </div>
+
+
+            <!-- HASIL UTAMA -->
+
+            <div class="card">
+                <h3>Hasil Utama</h3>
+
+                <div class="grid3">
+
+                    <div class="kpi">
+                        <small>Slurry / hari</small>
+                        <b id="kSlurry">0</b>
+                        m³
+                    </div>
+
+                    <div class="kpi">
+                        <small>Air / hari</small>
+                        <b id="kWater">0</b>
+                        m³
+                    </div>
+
+                    <div class="kpi">
+                        <small>Sludge / hari</small>
+                        <b id="kSludge">0</b>
+                        m³
+                    </div>
+
+                    <div class="kpi">
+                        <small>Filter Press runtime</small>
+                        <b id="kFP">0</b>
+                        jam
+                    </div>
+
+                    <div class="kpi">
+                        <small>Reservoir pump</small>
+                        <b id="kRes">9</b>
+                        m³/h
+                    </div>
+
+                    <div class="kpi">
+                        <small>Surplus ke overflow</small>
+                        <b id="kEff">0</b>
+                        m³/h
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- ALUR PROSES -->
+
+            <div class="card">
+                <h3>Alur Proses</h3>
+
+                <div class="flow">
+
+                    <div class="node">
+                        Bak 1<br>
+                        <small>Equalizing</small>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="node">
+                        CAF<br>
+                        <small>4.2 m³</small>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="node">
+                        Bak 2<br>
+                        <small>Sludge</small>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="node">
+                        Filter Press<br>
+                        <small>15 m³/h</small>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="node">
+                        Bak 3<br>
+                        <small>Sedimentasi</small>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="node">
+                        Reservoir<br>
+                        <small>Recycle / Effluent</small>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- KIMIA -->
+
+            <div class="card">
+                <h3>Kimia Hari Ini</h3>
+                <div id="chemKpi" class="grid3"></div>
+            </div>
+
+
+            <!-- CATATAN -->
+
+            <div class="card">
+                <h3>Catatan Operator</h3>
+
+                <textarea
+                    id="notes"
+                    style="width:100%;min-height:80px;border:1px solid #ccd5e0;border-radius:8px;padding:9px"
+                    placeholder="Masukkan kondisi proses..."
+                ></textarea>
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             ENGINEERING
+        ========================================================== -->
+
+        <section id="engineering" class="page">
+
+            <div class="card">
+
+                <h3>Engineering — Validasi Proses</h3>
+
+                <div class="warn">
+                    Actual pump output adalah nilai utama.
+                    Split air/sludge menggunakan karakteristik frequency database
+                    sebagai referensi.
+                    Cake wet/dry dan filtrat belum dihitung sebagai mass balance otomatis
+                    sampai data sampling final dikunci.
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Frequency Database</h3>
+
+                <table id="freqTable">
+
+                    <thead>
+                        <tr>
+                            <th>Hz</th>
+                            <th>Slurry m³/h</th>
+                            <th>Water m³/h</th>
+                            <th>Sludge m³/h</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Parameter Tetap</h3>
+
+                <div class="grid3">
+
+                    <div class="kpi">
+                        CAF volume
+                        <b>4.2 m³</b>
+                    </div>
+
+                    <div class="kpi">
+                        Filter Press
+                        <b>15 m³/h</b>
+                    </div>
+
+                    <div class="kpi">
+                        Reservoir pump
+                        <b>9 m³/h @ 40 Hz</b>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             DATABASE
+        ========================================================== -->
+
+        <section id="database" class="page">
+
+            <div class="card">
+
+                <h3>Database Engineering</h3>
+
+                <p class="muted">
+                    Area ini untuk engineering.
+                    Data default dapat diubah dan disimpan di browser perangkat ini.
+                </p>
+
+                <table id="chemTable">
+
+                    <thead>
+                        <tr>
+                            <th>Chemical</th>
+                            <th>mL</th>
+                            <th>sec</th>
+                            <th>kg/L</th>
+                            <th>Rp/kg</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+
+                </table>
+
+                <br>
+
+                <button class="primary" onclick="saveChem()">
+                    Simpan Database
+                </button>
+
+                <button class="danger" onclick="resetChem()">
+                    Reset Default
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Catatan Mass Balance</h3>
+
+                <p>
+                    Liquid: m³. Solids: kg/ton.
+                    Filter Press 15 m³/h.
+                    Data cake/filtrat harus berasal dari sampling/measurement
+                    yang tervalidasi sebelum dimasukkan sebagai model.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =============================================================
+         JAVASCRIPT
+    ============================================================= -->
+
+    <script>
+
+        /* =========================================================
+           FREQUENCY DATABASE
+        ========================================================== */
+
+        const freq = [
+
+            [50, 12, 11.76, .24],
+            [49, 11.76, 11.52, .24],
+            [48, 11.52, 11.29, .23],
+            [47, 11.28, 11.05, .23],
+            [46, 11.04, 10.82, .22],
+            [45, 10.8, 10.58, .22],
+            [44, 10.56, 10.35, .21],
+            [43, 10.32, 10.11, .21],
+            [42, 10.08, 9.88, .20],
+            [41, 9.84, 9.64, .20],
+            [40, 9.6, 9.41, .19],
+            [39, 9.36, 9.17, .19],
+            [38, 9.12, 8.94, .18],
+            [37, 8.88, 8.70, .18],
+            [36, 8.64, 8.47, .17],
+            [35, 8.4, 8.23, .17],
+            [34, 8.16, 8, .16],
+            [33, 7.92, 7.76, .16],
+            [32, 7.68, 7.53, .15],
+            [31, 7.44, 7.29, .15],
+            [30, 7.2, 7.06, .14],
+            [29, 6.96, 6.82, .14],
+            [28, 6.72, 6.59, .13],
+            [27, 6.48, 6.35, .13],
+            [26, 6.24, 6.12, .12],
+            [25, 6, 5.88, .12],
+            [24, 5.76, 5.64, .12],
+            [23, 5.52, 5.41, .11],
+            [22, 5.28, 5.17, .11],
+            [21, 5.04, 4.94, .10],
+            [20, 4.8, 4.7, .10]
+
+        ];
+
+
+        /* =========================================================
+           DEFAULT CHEMICAL DATABASE
+        ========================================================== */
+
+        const defaults = [
+
+            ["MASTER TP3450", 400, 60, .1, 4425],
+            ["MASTER CLEAN", 100, 24, .1, 5200],
+            ["FLOCCULANT", 100, 48, .001, 78000],
+            ["CAUSTIC SODA", 100, 120, .1, 11700]
+
+        ];
+
+
+        let chem =
+            JSON.parse(
+                localStorage.getItem("wwtpChemV7") || "null"
+            ) || defaults;
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================== */
+
+        function show(id, button) {
+
+            document
+                .querySelectorAll(".page")
+                .forEach(page => {
+                    page.classList.remove("active");
+                });
+
+            document
+                .getElementById(id)
+                .classList.add("active");
+
+            document
+                .querySelectorAll("nav button")
+                .forEach(navButton => {
+                    navButton.classList.remove("active");
+                });
+
+            button.classList.add("active");
+        }
+
+
+        /* =========================================================
+           NUMBER FORMAT
+        ========================================================== */
+
+        function fmt(value, decimals = 2) {
+
+            return Number(value || 0).toLocaleString(
+                "id-ID",
+                {
+                    minimumFractionDigits: decimals,
+                    maximumFractionDigits: decimals
+                }
+            );
+        }
+
+
+        /* =========================================================
+           RENDER DATABASE
+        ========================================================== */
+
+        function render() {
+
+            const freqTable =
+                document.querySelector("#freqTable tbody");
+
+            freqTable.innerHTML = freq
+                .map(row => `
+                    <tr>
+                        <td>${row[0]}</td>
+                        <td>${row[1]}</td>
+                        <td>${row[2]}</td>
+                        <td>${row[3]}</td>
+                    </tr>
+                `)
+                .join("");
+
+
+            const chemTable =
+                document.querySelector("#chemTable tbody");
+
+            chemTable.innerHTML = chem
+                .map((row, index) => `
+                    <tr>
+
+                        <td>${row[0]}</td>
+
+                        <td>
+                            <input
+                                data-i="${index}"
+                                data-c="1"
+                                value="${row[1]}"
+                            >
+                        </td>
+
+                        <td>
+                            <input
+                                data-i="${index}"
+                                data-c="2"
+                                value="${row[2]}"
+                            >
+                        </td>
+
+                        <td>
+                            <input
+                                data-i="${index}"
+                                data-c="3"
+                                value="${row[3]}"
+                            >
+                        </td>
+
+                        <td>
+                            <input
+                                data-i="${index}"
+                                data-c="4"
+                                value="${row[4]}"
+                            >
+                        </td>
+
+                    </tr>
+                `)
+                .join("");
+        }
+
+
+        /* =========================================================
+           SAVE CHEMICAL DATABASE
+        ========================================================== */
+
+        function saveChem() {
+
+            document
+                .querySelectorAll("#chemTable input")
+                .forEach(input => {
+
+                    chem[input.dataset.i][input.dataset.c] =
+                        Number(input.value);
+
+                });
+
+
+            localStorage.setItem(
+                "wwtpChemV7",
+                JSON.stringify(chem)
+            );
+
+
+            calculate();
+
+            alert(
+                "Database kimia tersimpan di perangkat ini."
+            );
+        }
+
+
+        /* =========================================================
+           RESET CHEMICAL DATABASE
+        ========================================================== */
+
+        function resetChem() {
+
+            chem = defaults.map(row => [...row]);
+
+            localStorage.setItem(
+                "wwtpChemV7",
+                JSON.stringify(chem)
+            );
+
+            render();
+            calculate();
+        }
+
+
+        /* =========================================================
+           PROCESS CALCULATION
+        ========================================================== */
+
+        function calculate() {
+
+            const hours =
+                Number(
+                    document.getElementById("hours").value
+                ) || 0;
+
+            const hzValue =
+                Number(
+                    document.getElementById("hz").value
+                ) || 50;
+
+            const actual =
+                Number(
+                    document.getElementById("actual").value
+                ) || 0;
+
+
+            const row =
+                freq.find(item => item[0] === hzValue)
+                || freq[0];
+
+
+            const ratioWater =
+                row[2] / row[1];
+
+            const ratioSludge =
+                row[3] / row[1];
+
+
+            /*
+             * Actual pump output adalah nilai utama.
+             */
+
+            const slurry =
+                actual * hours;
+
+            const water =
+                slurry * ratioWater;
+
+            const sludge =
+                slurry * ratioSludge;
+
+            const filterPressRuntime =
+                sludge / 15;
+
+            /*
+             * Surplus dihitung sebagai selisih flow aktual
+             * terhadap kapasitas pompa reservoir 9 m³/h.
+             * Ini bukan klaim overflow aktual tanpa data level reservoir.
+             */
+
+            const surplus =
+                Math.max(0, actual - 9);
+
+
+            document.getElementById("kSlurry").textContent =
+                fmt(slurry);
+
+            document.getElementById("kWater").textContent =
+                fmt(water);
+
+            document.getElementById("kSludge").textContent =
+                fmt(sludge);
+
+            document.getElementById("kFP").textContent =
+                fmt(filterPressRuntime);
+
+            document.getElementById("kEff").textContent =
+                fmt(surplus);
+
+
+            /* =====================================================
+               CHEMICAL CALCULATION
+            ====================================================== */
+
+            let totalCost = 0;
+            let totalKg = 0;
+            let chemicalBox = "";
+
+
+            chem.forEach(row => {
+
+                const pumpLh =
+                    (row[1] / 1000 / row[2]) * 3600;
+
+                const chemicalKgH =
+                    pumpLh * row[3];
+
+                const chemicalKgDay =
+                    chemicalKgH * hours;
+
+                const costDay =
+                    chemicalKgDay * row[4];
+
+                const kgPerM3 =
+                    actual
+                        ? chemicalKgH / actual
+                        : 0;
+
+
+                totalCost += costDay;
+                totalKg += chemicalKgDay;
+
+
+                chemicalBox += `
+                    <div class="kpi">
+
+                        <small>
+                            ${row[0]}
+                        </small>
+
+                        <b>
+                            ${fmt(chemicalKgDay, 3)} kg/day
+                        </b>
+
+                        <span class="muted">
+                            ${fmt(kgPerM3, 4)} kg/m³
+                            •
+                            Rp ${Math.round(costDay).toLocaleString("id-ID")}/day
+                        </span>
+
+                    </div>
+                `;
+
+            });
+
+
+            chemicalBox += `
+                <div class="kpi">
+
+                    <small>
+                        Total
+                    </small>
+
+                    <b>
+                        ${fmt(totalKg, 3)} kg/day
+                    </b>
+
+                    <span class="muted">
+                        Rp ${Math.round(totalCost).toLocaleString("id-ID")}/day
+                    </span>
+
+                </div>
+            `;
+
+
+            document.getElementById("chemKpi").innerHTML =
+                chemicalBox;
+        }
+
+
+        /* =========================================================
+           INITIALIZATION
+        ========================================================== */
+
+        document.getElementById("date").value =
+            new Date().toISOString().slice(0, 10);
+
+        render();
+        calculate();
+
+    </script>
+
+</body>
+</html>
